@@ -1,19 +1,27 @@
-tabla <- function(df, ...) {
+tabla<-function(df, ...) {
   library(dplyr)
   library(tidyverse)
   group_var <- quos(...)
   i=length(group_var)
   n=nrow(df)
   df.1<-df %>%
-      group_by(!!!group_var) %>%
-      summarise(t = n()) %>%
-      mutate(p.t=t/n*100)
+    group_by(!!!group_var) %>%
+    summarise(t = n()) %>%
+    mutate(p.t=t/n*100)
   
-  j=as.numeric(length(df.1))
-  i=as.numeric(i)
-  u=as.numeric(i+1)
-  x1=rep(0,i)
-  x2=colSums(df.1[,u:j])
-  x3=c(x1,x2)
-  df.1=rbind.data.frame(x3,df.1)
+  j<-as.numeric(length(df.1))
+  i<-as.numeric(i)
+  u<-as.numeric(i+1)
+  x1<-rep(0,i)
+  x2<-colSums(df.1[,u:j])
+  x3<-c(x1,x2)
+  n.df.1=nrow(df.1)
+  c1<-df.1[1:n.df.1,1]
+  c.names=colnames(c1)
+  c2<-c("Total")
+  c1[]<-lapply(c1,as.character)
+  c3<-rbind.data.frame(c2,c1); print(c3)
+  df.1<-rbind.data.frame(x3,df.1)
+  df.2<-df.1[,2:j]
+  df.3<-cbind.data.frame(c3,df.2)
 }
